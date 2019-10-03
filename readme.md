@@ -98,13 +98,9 @@ old way > docker <command> (options)
 
 Content :
 
-# image v/s container
-
-# run/stop/remove container
-
-# check container logs and processes.
-
--
+- image v/s container
+- run/stop/remove container
+- check container logs and processes.
 
 # image v/s container :
 
@@ -173,7 +169,8 @@ NOTE :Container Name (.Names) field is generated randomly from OSS Surname of ha
   $ docker container logs festive_swartz
   $ docker container logs ngnix_webhost
 
-- docker container top <Container_names>
+- To know the process which are running internal in the specific container image :
+  \$ docker container top <Container_names>
 - To list all the container :
   \$ docker container ls -a
 - TO Remove all the container at same time : docker container rm <one_or_more_container_containerID>
@@ -189,3 +186,20 @@ NOTE :Container Name (.Names) field is generated randomly from OSS Surname of ha
 ---
 
 # Container v/s VirtualMachine -VM
+
+- Containers are not mini-VM's
+  - Containers are just process
+  - COntainer have limited to what resources they can access
+  - Container exit when process stops
+  - ex- Let us download and install mongodb
+    \$ docker pull mongo
+    \$ docker run --name dock_mongo_db -d mongo
+    (docker run --name <user_define_name_image> -d mongo)
+    \$ docker container ls -a
+    \$ docker top dock_mongo_db
+    (List Process that running in Specific COntianer mentioned with COntainer_names )
+    \$ ps aux
+    (List of process that are currently running the local machine -> Task Manager)
+    (NOte : You can find mongod is running as process in the process list, So Mongod is not hiding as VM its just like a normal process running the local machine)
+    \$ docker stop dock_mongo_db
+    (Stops the docker container Instance of mongod image, Thus in the process list mongo process would be killed)
