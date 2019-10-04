@@ -227,3 +227,82 @@ docker container run --publish 8080:80 --name webhost -d nginx:1.11 nginx -T
       (This will start the mongodb instance again)
 
 ---
+
+# What is going on in container :
+
+- docker container top - list of process which are running in that container specified.
+  - \$ docker container top nginx-server
+- docker container inspect - details of one container config
+  - \$ docker container inspect mysql-db
+- docker container stats - performance stats for all containers.
+  - \$ docker container stats
+
+---
+
+# Getting a shell inside container
+
+- docker container run -it -> Start new container interactively
+
+  - Allows developer to go into the container and perform application CLI specific to application.
+  - No SSH is needed for interacting with your application (DOcker CLI is great substitute for adding SSH to containers)
+  - \$ docker container run -it --help
+    (t -> gives us pseudo-TTY [ Which simulates a real terminal, like a how SSH does])
+    (i -> Keeps session open to receive terminal input)
+  - docker container run -it --name <.Names> nginx bash
+    (if run with -it, This will provide us a terminal/shell inside the running container)
+    ex- \$ docker container run -it --name nginx-server2 nginx bash
+
+- To start/re-run the image in terminal for OS :
+  ex - \$ docker container start -ai ubunutu
+
+- To start/re-run the image in terminal for Application:
+  docker container exec -it -> run additional command in existing container
+  ex- \$ docker container exec -it mysql-db bash
+
+- NOTE : We can isntall another OS inside the docker, let us install alpine which is smallest OS of linux distro that have size of 5MB
+  - \$ docker pull alpine
+  - \$ docker image ls -a
+  - \$ docker container run -it alpine bash (ERROR : alpine does not have bash, so use sh [Also alpine package manager is apk]) -> \$ docker container run -it alpine sh
+    \$ echo 'hello'
+
+---
+
+# Docker Networks
+
+- docker container run -p ==> Expose the port
+- for local dev/testing, network usually 'just work'
+- quick port check with '\$ docker container port < container >'
+- When we start container, we are at the background to connect to particular docker network- which is called network bridge
+- Each container connected to a private virtual network 'bridge'.
+- Each virtual network routes through NAT firewall on host IP.
+- All Container on a virtual network can talk to each other without -p (port)
+- When we have an application which has apache server container and node server container, those two container should be in same network, they will be able to talk to each other without actually having to expose port and trying connect to each others port.
+- Best pracitce : is to create a new virtual network for each app :
+  - network 'my_web_app' for mysql and apache containers.
+  - network 'my_api' for mongo and nodejs containers.
+- BATTERIES INCLUDED, BUT REMOVABLE
+  - default work well in many cases, but easy to swap out parts to customize it.
+- Make new virtual networks.
+- Attach containers to more then one virtual network (or none).
+- Skip virtual networks and use host IP (--net=host)
+- Use different Docker network drivers to gain new abilities.
+
+Some cmds :
+
+- \$ docker container run -p 80:80 --name nginx-webhost -d nginx
+  (-p or --publish ==> publishing port is always in HOST:CONTAINER format)
+
+- \$ docker container port nginx-webhost
+  (TO get the port number)
+- \$ docker container inspect --format '{{.NetworkSettings.IPAddress}}' nginx-webhost
+  (Shows the containers IP Address)
+
+---
+
+# Docker Network : CLI
+
+- Show networks : docker network ls
+- Inspect a network : docker network inspect
+- Create a network : docker network create --driver
+- Attach a network to container : docker network connect
+- Dettach a network from container : docker network disconnect
