@@ -185,6 +185,26 @@ NOTE :Container Name (.Names) field is generated randomly from OSS Surname of ha
 
 ---
 
+# What happens in 'docker container run' ?
+
+1. Docker looks for the image locally in image cache, doesn't find anything.
+2. THen looks in remote image repositry (default to Docker Hub).
+3. Downloads the latest version
+4. Create new container based on that image and prepares to start.
+5. Gives it a virtual IP on a private network inside docker engine.
+6. Opens up port 80 on host and forwards to port 80 in container
+7. Starts container by using the CMD in the image Dockerfile.
+
+<!--
+docker container run --publish 8080:80 --name webhost -d nginx:1.11 nginx -T
+                                  ^                             ^     ^
+                                  |                             |     |
+     Change host listening port __|    Change version of image__|     |___Change CMD run on start
+
+ -->
+
+---
+
 # Container v/s VirtualMachine -VM
 
 - Containers are not mini-VM's
@@ -192,14 +212,18 @@ NOTE :Container Name (.Names) field is generated randomly from OSS Surname of ha
   - COntainer have limited to what resources they can access
   - Container exit when process stops
   - ex- Let us download and install mongodb
-    \$ docker pull mongo
-    \$ docker run --name dock_mongo_db -d mongo
-    (docker run --name <user_define_name_image> -d mongo)
-    \$ docker container ls -a
-    \$ docker top dock_mongo_db
-    (List Process that running in Specific COntianer mentioned with COntainer_names )
-    \$ ps aux
-    (List of process that are currently running the local machine -> Task Manager)
-    (NOte : You can find mongod is running as process in the process list, So Mongod is not hiding as VM its just like a normal process running the local machine)
-    \$ docker stop dock_mongo_db
-    (Stops the docker container Instance of mongod image, Thus in the process list mongo process would be killed)
+    - \$ docker pull mongo
+    - \$ docker run --name dock_mongo_db -d mongo
+      (docker run --name <user_define_name_image> -d mongo)
+    - \$ docker container ls -a
+    - \$ docker top dock_mongo_db
+      (List Process that running in Specific COntianer mentioned with COntainer_names )
+    - \$ ps aux (or) ps aux | grep mongo
+      (List of process that are currently running the local machine -> Task Manager)
+      (NOte : You can find mongod is running as process in the process list, So Mongod is not hiding as VM its just like a normal process running the local machine)
+    - \$ docker stop dock_mongo_db
+      (Stops the docker container Instance of mongod image, Thus in the process list mongo process would be killed)
+    - \$ docker start dock_mongo_db
+      (This will start the mongodb instance again)
+
+---
