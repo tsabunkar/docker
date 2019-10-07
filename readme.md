@@ -302,7 +302,48 @@ Some cmds :
 # Docker Network : CLI
 
 - Show networks : docker network ls
+
+  - \$ docker network ls : All the network that are created
+  - (--network bridge :- Default docker virtual network, Which is NAT'ed behinf the Host IP)
+  - (--network host :- It gains performance by skipping virtual networks but sacrifies security of container models)
+  - (--network none :- removes eth0 and only leaves you with localhost interface in container)
+
 - Inspect a network : docker network inspect
+
+  - \$ docker network inspect bridge => Inspecting specific netowrk, in this case bridge network
+
 - Create a network : docker network create --driver
+
+  - \$ docker network create my_app_net => Spawns a new virtual network for you to attach container to
+  - \$ docker network ls => Default network driver create is bridge (Network driver : Built-in or 3rd party extension that give you virtual network features)
+  - \$ docker container run -d --name nginx_webserver --network my_app_net nginx => Creating new nginx_webserver contianer in network which was previously created my_app_net
+
 - Attach a network to container : docker network connect
+
+  - \$ docker network connect < ContianerID > => Dynamically creates a NIC in a container on an exiting Virtual network
+
 - Dettach a network from container : docker network disconnect
+
+- docker network disconnect < ContianerID > => Dynamically removes a NIC from a container in a specific VM.
+
+---
+
+# Docker Networks : Default Security
+
+- Create your apps so frontend/backend sit on same docker network.
+- Their inter-communication never leave host.
+- All externally exposed ports closed by default.
+- You must manually expose via -p, which is better default security!
+- This gets even better later with Swarm and Overlay networks
+
+---
+
+# Docker Networks : DNS
+
+- Understand how DNS is the key to easy inter-container comms.
+- See how it works by default custom networks
+- Learn how to use --link to enable DNS on default bridge network
+
+* Note : Forget IP's - Static IP's and using IP's for talking to containers is an anti-pattern. Do your best to avoid it
+
+- DNS Naming : Docker DNS - Docker daemon has a built-in DNS server that containers use by default
