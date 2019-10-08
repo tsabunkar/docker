@@ -310,7 +310,7 @@ Some cmds :
 
 - Inspect a network : docker network inspect
 
-  - \$ docker network inspect bridge => Inspecting specific netowrk, in this case bridge network
+  - \$ docker network inspect bridge => Inspecting specific network, in this case bridge network
 
 - Create a network : docker network create --driver
 
@@ -346,4 +346,28 @@ Some cmds :
 
 * Note : Forget IP's - Static IP's and using IP's for talking to containers is an anti-pattern. Do your best to avoid it
 
+- DNS Defautl Names : Docker defaults the hostname to the container's name, but you can also set aliases
 - DNS Naming : Docker DNS - Docker daemon has a built-in DNS server that containers use by default
+
+- Cmds :
+
+  - \$ docker container run -d --name my_nginx --network my_app_net nginx
+  - \$ docker network ls (from networkID column copy the networkId of my_app_net network ex- 64fd52b00798)
+  - \$ docker network inspect <NetworkID>
+    Ex- \$ docker network inspect 64fd52b00798 ==> Inspecting the my_app_net network, where we can see the list of container this network is having in 'Container' property.
+  - \$ docker container run -d --name my_new_nginx --network my_app_net nginx
+  - \$ docker network inspect 64fd52b00798
+    ( Now you will find the 'Containers' property has two container in my_app_net network i.e- my_nginx and my_new_nginx, NOTE : both the [my_nginx, my_new_nginx] container has different IPv4 address in the same network [ my_app_network] ).
+  - Go inside bin/bash directory of my_nginx container :
+    - \$ docker container exec -it my_nginx /bin/bash
+    - \$ apt-get update
+    - \$ apt-get install iputils-ping
+    - \$ docker container exec -it my_nginx ping my_new_nginx
+      (Thus two different Containers/i.e- Different instance of image is communicating with each-other in same network- my_app_net)
+
+- Thus to Conclude:
+  - Containers Shouldn't rely on IP's for inter-communication
+  - DNS for firendly names is builtin if u can use custom networks
+  - In future scope we will see Cotainer communication over a network gets easy with the concept of -> DOCKER COMPOSE
+
+---
