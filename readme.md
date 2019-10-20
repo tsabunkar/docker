@@ -371,3 +371,12 @@ Some cmds :
   - In future scope we will see Cotainer communication over a network gets easy with the concept of -> DOCKER COMPOSE
 
 ---
+
+# Further topic discussed :
+
+- Container Images : docker/container-images
+- Container Lifetime & Presistent Data volumes : docker/container-lifetime
+- Docker Compose : docker/compose
+- Swarm : swarm
+- Swarm Lifcycle : swarm/life-cycle
+- Container Registries Image Storage and Distribution :
