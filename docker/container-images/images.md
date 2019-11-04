@@ -40,10 +40,10 @@
 - Images are designed by union file system concept
 - \$ docker image ls
 - \$ docker history nginx:latest ==> Docker image history :- Shows the layers of changes made in that image, This is not the list that had happen in the container but rather it is history about the image layer
-  - Every image start from - blank layer called ==> Sratch
-  - Then after that, Every set of changes that happens on the file system in the image is a layer ( It can be one layer or more layer)
-  - Thus this cmd shows the list of layer changes that happend for that particualr image
-  - Every layer has its own unique SHA
+- Every image start from - blank layer called ==> Sratch
+- Then after that, Every set of changes that happens on the file system in the image is a layer ( It can be one layer or more layer)
+- Thus this cmd shows the list of layer changes that happend for that particualr image
+- Every layer has its own unique SHA
 - We think our own image as :
   - Add Ubuntu distro image
   - On that ubuntu, Add apt package manager
@@ -59,4 +59,27 @@
   - Now you have created one more Ubuntu:17 Distro layer, but u want yum as package manager ==> Consider this is our second image
   - But while in second image - Docker will use the cached layer of Ubuntu:17 locally and only download the yum package manager
   - Vizualization : container-images/image-layer.png
-- When
+
+---
+
+# Container Layer
+
+- Vizualization : container-images/container-layer.png
+- Consider we have apache image, we want container top of it, Docker we will create a new read & write layer for that container, on top of Apache image
+- Similarly we have container-2 and container-3 instance
+- These containers are layers as stack
+- When we are running containers and changing a file on the image, The file system will take that file differenceing file and copy it specific container (i.e-container) ==> COW (Copy on Write)
+- \$ docker history mysql:8.0.18
+- \$ docker image inspect mysql:8.0.18 ==> Returns JSON metadata about the image
+  ( We know that image is made up of binaries, its dependencies and meta-data about that image :: Thus inspect of image gives the meta-data about that image )
+  ( We get information about the 'ExposedPorts', 'Env', etc)
+
+# Conclusion of Images and Their Layers:
+
+- Images are made up of file system changes and metadata
+- Each layer is uniquely identified by SHA and only stored once on a host
+- This layer concept saves storage space on host and transfer time on push/pull
+- A container is just a single read/write layer on top of image
+- docker image history and docker image inspect commands tell us about the history of the image and gives the meta-data about that image
+
+---
