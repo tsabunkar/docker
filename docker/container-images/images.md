@@ -83,3 +83,53 @@
 - docker image history and docker image inspect commands tell us about the history of the image and gives the meta-data about that image
 
 ---
+
+# Image Tags
+
+- Docker image tag is used to assign one or more tag to an image.
+- 'Latest' tag -> It's just the default tag, but image owners should assign it to the newest stable version.
+- \$ docker image tag --help
+- \$ docker image ls
+- <user>/<repo> : <tag> => Default tag is latest if not specified
+- When we do (\$ docker image ls) we have column name as REPOSITORY -> Which is organization name or username who has created the particular image. column TAG -> is the tag name of those images by default it is 'latest'
+- Official repositories -> They live at the 'root namespace' of the registry so that dont need account name in front of its repo name. ex- nginx, mysql, alpine images
+- Tag -> Think as : Not like a version, not a branch name, but rather think as git tags. It just a pointer to a specific git commit.
+- To re-tag exisiting image into different tag :
+  - Syntax: docker image tag SOURCE_IMAGE[:TAG] TARGET_IMAGE[:TAG]
+  - \$ docker image tag nginx:latest nginx:mytag
+      <!-- 
+      tejas@sabunkar:~$ docker image ls
+      REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+      mysql               8.0.18              c8ee894bd2bd        5 weeks ago         456MB
+      mongo               latest              58477a771fb4        7 weeks ago         361MB
+      nginx               latest              f949e7d76d63        2 months ago        126MB
+      nginx               mytag               f949e7d76d63        2 months ago        126MB
+    -->
+- Push docker image : Uploads changed layers to a remote image registry (default is dockerHub)
+  - \$ docker image push nginx:mytag
+  - Error : denied: requested access to the resource is denied, unauthorized: authentication required
+  - \$ docker login
+  - docker login <server> ==> Defaults to logging in dockerHub, but you can override by adding server url
+  - NOTE: When we login in docker Hub remote repositry using local Machine, passsword would be stored in encrypted format in that machine thus : ( Your password will be stored unencrypted in /home/tejas/.docker/config.json ) Thus it is better recommended to logout from your account if your using shared machine or servers, In order to protect your account.
+  - \$ docker image push nginx:mytag ==> (Error : denied: requested access to the resource is denied)
+  - THis is bcoz : have to tag your image before pushing i.e unique name should be first bcoz only official images can have without it.
+  - \$ docker image rm nginx:mytag (Removing the old unused image and its tag)
+  - \$ docker image tag nginx:latest tsabunkar/nginx:mytag
+  - \$ docker image push tsabunkar/nginx
+  - Now go to web > login to docker hub > In Repositories > You can find your this image been hosted > Thus other user can use this image > docker push tsabunkar/nginx:tagname
+- To create a new tag for the exisiting image :
+  - \$ docker image tag tsabunkar/nginx:mytag tsabunkar/nginx:testing-tag2
+  - \$ docker image ls
+  - \$ docker image push tsabunkar/nginx:testing-tag2
+  - Go to this particular remote repositry > Tags Tab > You can see two tags for this image would be avaliable (Its like two version of the same image is aviable in docker Hub) i.e.- 'mytag' and 'testing-tag2'
+- To create private image in docker Hub, You need to go to remote site > Create a repositry > Select visibility as private > Now push the docker image from local, So that this image will be private
+
+---
+
+# Upload Image to Docker Hub
+
+---
+
+# Image ID v/s Tag
+
+---
