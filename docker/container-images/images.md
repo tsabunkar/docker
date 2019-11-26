@@ -126,10 +126,23 @@
 
 ---
 
-# Upload Image to Docker Hub
+# Building Images and docker files Basics
 
----
+- To build a docker image from docker file :-> docker image build -t some-dockerfile
 
-# Image ID v/s Tag
+- Dockerfile consist of :
+
+  - FROM : minimal distribution, We generally use debian, alpine, bcoz - This Linux distro OS has package manager like apt and yun which can be used to install software, run a software, etc Thus this is one of the reason to use these Linux OS distros to build container
+  - ENV : used to set Environment variables, env variables are one reason they were chosen as preferred way to inject key/value is they work everywhere, on every OS and config files.
+  - RUN : executing shell commands, in particular order. You will use run commands when you want to install package repositry, any commands you want to execute
+  - EXPOSE : bydefault no TCP/UDP port is exposed from a container to Virtual network, In order to expose these port we use this EXPOSE
+  - CMD : final command will run everytime we launch new container from the image (or) we restart container
+
+- To Build docker image from a docker file :
+  - go to /tejas/workspace/vsc/docker/docker/container-images/docker-file
+  - \$ docker image build -t mycustomnginx .
+  - In above command we are building docker image from docker a docker file ( Above . dot means build docker file in this directory)
+  - tejas@sabunkar:~/tejas/workspace/vsc/docker/docker/container-images/docker-file\$ docker image build -t mycustomnginx .
+  -
 
 ---
