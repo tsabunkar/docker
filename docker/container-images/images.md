@@ -142,7 +142,6 @@
   - go to /tejas/workspace/vsc/docker/docker/container-images/docker-file
   - \$ docker image build -t mycustomnginx .
   - In above command we are building docker image from docker a docker file ( Above . dot means build docker file in this directory)
-  - tejas@sabunkar:~/tejas/workspace/vsc/docker/docker/container-images/docker-file\$ docker image build -t mycustomnginx .
-  -
+  - tejas@sabunkar:~/tejas/workspace/vsc/docker/docker/container-images/file1/docker-file\$ docker image build -t mycustomnginx .
 
 ---
