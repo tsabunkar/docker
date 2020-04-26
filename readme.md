@@ -35,7 +35,9 @@ Docker :
 - sudo apt-get update
 - sudo apt-get upgrade
 - Goto ( Install using the convenience script ) Section in https://docs.docker.com/install/linux/docker-ce/ubuntu/
-- \$ curl -fsSL https://get.docker.com -o get-docker.sh
+(https://docs.docker.com/engine/install/ubuntu/#install-using-the-convenience-script)
+
+- \$ sudo curl -fsSL https://get.docker.com -o get-docker.sh
 - \$ sudo sh get-docker.sh
 - So if we dont want to type everytime sudo (Admin privilage) -> Thus add user account to docker group :
   \$ sudo usermod -aG docker <your-user>
