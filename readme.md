@@ -35,7 +35,7 @@ Docker :
 - sudo apt-get update
 - sudo apt-get upgrade
 - Goto ( Install using the convenience script ) Section in https://docs.docker.com/install/linux/docker-ce/ubuntu/
-(https://docs.docker.com/engine/install/ubuntu/#install-using-the-convenience-script)
+  (https://docs.docker.com/engine/install/ubuntu/#install-using-the-convenience-script)
 
 - \$ sudo curl -fsSL https://get.docker.com -o get-docker.sh
 - \$ sudo sh get-docker.sh
@@ -71,6 +71,14 @@ Docker :
   \$ docker-compose --version
 
 -----------------------------DONE-------------------------------
+
+# Install docker in ubuntu LTS 20.04
+
+- Currently Docker does not support Ubuntu LTS 20.04 So we need to using bionic (Ubuntu 18.04 LTS) release file to install docker or use old way of installing docker i.e.:-
+
+- sudo apt install docker.io
+
+Reference : https://askubuntu.com/questions/1230189/how-to-install-docker-community-on-ubuntu-20-04-lts
 
 ---
 
