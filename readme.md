@@ -77,6 +77,7 @@ Docker :
 - Currently Docker does not support Ubuntu LTS 20.04 So we need to using bionic (Ubuntu 18.04 LTS) release file to install docker or use old way of installing docker i.e.:-
 
 - sudo apt install docker.io
+- NOTE : Steps remain same to install docker compose
 
 Reference : https://askubuntu.com/questions/1230189/how-to-install-docker-community-on-ubuntu-20-04-lts
 
