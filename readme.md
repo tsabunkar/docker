@@ -405,3 +405,15 @@ REF:
 https://stackoverflow.com/questions/17236796/how-to-remove-old-docker-containers
 
 ---
+
+# Run docker without using sudo (root)
+
+- \$ sudo groupadd docker
+- $ sudo usermod -aG docker $USER
+- \$ newgrp docker
+- \$ docker run hello-world
+
+- REF
+- https://stackoverflow.com/questions/48957195/how-to-fix-docker-got-permission-denied-issue
+
+---
