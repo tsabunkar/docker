@@ -34,10 +34,53 @@
 - \$ docker container ls -a | wc -l( containers are PRESENT on the host -> Including both Running and Not Running)
 - \$ docker container ls -a [States is - EXIT ] ==> (state of the stopped alpine container)
 - \$ docker container ls -aq (To list all the running container --> Only display container ID )
-- \$ docker container stop \$(docker container ls -aq) [To Stop all containers running]
-- \$ docker container rm \$(docker container ls -a -aq) [To Remove all containers from disk]
+- $ docker container stop $(docker container ls -aq) [To Stop all containers running]
+- $ docker container rm $(docker container ls -a -aq) [To Remove all containers from disk]
 - \$ docker image rm ubuntu (Delete the ubuntu Image)
 - \$ docker run -d --name webapp nginx:1.14-alpine (Run a container with the nginx:1.14-alpine image and name it webapp)
 - \$ docker rm -f $(docker ps -a -q) && docker rmi -f $(docker images -q) [To remove all running containers ever and all images pulled ever]
+
+---
+
+# Docker Run
+
+- \$ docker run centos:centos8 cat /etc/redhat-release
+- \$ docker run centos:centos7 cat /etc/redhat-release (running different docker container instance, different images with tags)
+- \$ docker run centos:centos8 sleep 1500 (CTRL+C won't work to terminate)
+  - (To stop above container)
+  - (open new terminal)
+  - \$ docker container ls
+  - \$ docker container stop <container_id>
+- \$ docker run -d centos:centos8 sleep 1500 (running a server which runs permnanetly until terminated)
+- \$ docker container ls
+- \$ docker container attach 7425ab880483 (Attach mode to running container )
+- \$ docker run timer (keeps printing time infinitely ==> Runs in Attached Mode - Foreground)
+- \$ docker run -d timer
+- \$ docker container attach 7425ab880483
+- \$ docker pull jenkins:2.60.3
+- \$ docker run jenkins:2.60.3
+- \$ docker inspect cfdeb24ff21e (To find internal ipAddr of Jenkins container --> check under "Networks" - "IPAddress": "172.17.0.2",)
+- (Visit: http://172.17.0.2:8080) ==> Access this docker container instance of Jenkins Running on Application internal ipAddr
+- \$ ifconfig docker0 (To Know Docker HOST IpAddress)
+  - NOTE: Docker Host Ip Addr is not same as Localhost (Host Machine IpAddr)
+- (Visit http://172.17.0.1:9090/) ==> Docker host IpAddress is not same as the docker container of Jenkins internal IpAddress
+- ( In order to make: Docker host IpAddres <--Map--> Jenkins internal IpAddress )
+  - Stop jekins container instance if running
+  - \$ docker run -p 9090:8080 jenkins:2.60.3
+  - ( Docker Host PORT = 9090 <--Map--> Jenkins Internal Container PORT = 8080 )
+  - Visit Jenkins internal ip address (container internal ip addr) ==> http://172.17.0.2:8080/
+  - Visit Docker Host Ip Address ==> http://172.17.0.1:9090/
+- (To Persist docker container data-> map volume)
+  - \$ mkdir ~/tejas/docker-data (pwd--> /home/tejas/tejas/docker-data) (Your local machine space)
+  - \$ cd ~/tejas/docker-data
+  - \$ mkdir jenkins-data
+  - \$ sudo docker run --name myjenkins -p 9090:8080 -v /home/tejas/tejas/docker-data/jenkins-data:/var/jenkins_home jenkins:2.60.3
+    (ERROR : not able to install any pipeline plugins bcoz -> jenkins:2.60.3 is deprecated rather use -> docker pull jenkins/jenkins)
+  - \$ docker pull jenkins/jenkins:2.242
+  - \$ sudo docker run --name myjenkins -p 9090:8080 -v /home/tejas/tejas/docker-data/jenkins-data:/var/jenkins_home jenkins/jenkins:2.241
+
+---
+
+- REF: https://www.jenkins.io/blog/2018/12/10/the-official-Docker-image/
 
 ---
