@@ -1,0 +1,22 @@
+# Docker Basic Commands
+
+- \$ docker pull centos:centos8
+- \$ docker run centos:centos8
+- \$ docker run -it centos:centos8 bash (run bash command inside the running container)
+- \$ # cat /etc/redhat-release
+- \$ # exit
+- \$ docker run -d centos:centos8 sleep 10 (run in background in Dettached mode)
+- \$ docker container ls
+- \$ docker container ls -a
+- \$ docker run -d centos:centos8 sleep 2000
+- \$ docker container ls
+- \$ docker stop 10ca53b41ff1 (stopping a container)
+- \$ docker container ls -a [check exit code for previously stopped/killed container -> Exited (137)]
+- \$ docker rm 10ca53b41ff1
+- \$ docker image ls
+- \$ docker image prune (Removed unused images)
+- \$ docker image rm c6d035ac9b1c (Remove a particular image)
+- \$ docker image rm -f c6d035ac9b1c (force remove an image)
+- \$ docker run -d centos:centos8 sleep 2000
+- \$ docker container ls
+- \$ docker container exec 02de44101cdd cat /etc/redhat-release (excutes command inside a running container)
