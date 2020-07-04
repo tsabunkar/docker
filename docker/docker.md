@@ -106,3 +106,50 @@
 - Traditionally developer use to provide manual steps Guide - host to setup, App.war file to deploy, dependencies to be configured etc to Ops Team in order to deploy application which result into "NOT WORK IN MACHINE" (Also Ops team did not develop the application- They struggled with setting it up)
 - Now, This manual steps Guide is transformed into Docker file, This docker file is used to create an image. So that Developer provide this docker file to Ops Team. Thus this image will run on any docker host and machine, thus ops team can directly deploy this instance of docker file iamge provided by developer.
 - Therefore Docker contributes for DevOps Culture
+
+---
+
+# Docker Editions
+
+- Community Edition (FOSS)
+- Enterprise Edition (Paid version)
+
+---
+
+# Commands
+
+- Download an image locally:
+  - \$ docker pull docker/whalesay
+- Run(start) a container:
+  - \$ docker run docker/whalesay cowsay boo
+  - (if not present locally it pull from Docker hub Registry)
+  - (run the instance of nginx application if the image is already exist locally)
+- List Containers
+  - \$ docker container ls
+  - \$ docker container ls -a (containers that are stopped)
+- Stop Container
+  - \$ docker container stop <container_id>
+- Remove container
+  - \$ docker container rm <container_id>
+- List of Images
+  - \$ docker images ls
+  - \$ docker images ls -a (image that is stopped)
+- Remove image
+  - \$ docker image rm <image_id> (before stop and remove all the previous containers ran)
+- Running docker container of OS
+  - \$ docker pull alpine:3.12.0
+  - \$ docker run alpine:3.12.0
+  - (When we run the instance of alpine OS, docker run this container and exit immediately, If we list the running containers we cannot see the container running Reason ---> Unlike VM - containers are not ment to host an operating system, whereas containers are ment to run a specific task i.e- run webserver, run application server, run db instance, etc)
+  - Container lives only uptill the process inside it is alive for ex- if web server inside the container is stopped/crached the container exist. but when we run the instance of alpine os it stop immediately as generally os container is used as base image for other applications
+  - If docker run command is not running with specific process like - \$ docker run alpine:3.12.0
+    (then we can run this image with specific process like - \$ docker run alpine:3.12.0 sleep 5)
+- Exec - Execute a command inside Running container
+  - (if we want to run command inside the running container - [if that container application provide bash environ] then we can use "exec" command)
+  - \$ docker container ls -a
+  - \$ docker exec <container_id/container_name> cat /etc/hosts (print the file hosts present inside etc directory)
+- Run - Attach and detach
+  - \$ docker run kodekloud/simpe-webapp [Attached Mode]
+    - (It run in foreground in attach mode - we are attached to CLI of this running container application and we can interact with this running container application instance)
+  - \$ docker run -d kodekloud/simpe-webapp [Deattached Mode]
+    - (Will run this container in deattached mode, it will run the docker container in background mode)
+  - \$ docker container attach <container_id> (Dynamically attach to the running container instance in Attach Mode)
