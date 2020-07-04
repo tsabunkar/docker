@@ -20,3 +20,24 @@
 - \$ docker run -d centos:centos8 sleep 2000
 - \$ docker container ls
 - \$ docker container exec 02de44101cdd cat /etc/redhat-release (excutes command inside a running container)
+
+---
+
+# Quiz
+
+- https://katacoda.com/kodekloud/scenarios/docker-for-beginners-fcc-basiccommands
+
+- \$ docker version (version of Docker Server Engine running on the Host)
+- \$ docker container ls | wc -l (count containers are running on this host - 1 )
+- \$ docker image ls | wc -l (count image downloaded on this host - 1 )
+- \$ docker run redis (run redis image instance as container)
+- \$ docker container ls -a | wc -l( containers are PRESENT on the host -> Including both Running and Not Running)
+- \$ docker container ls -a [States is - EXIT ] ==> (state of the stopped alpine container)
+- \$ docker container ls -aq (To list all the running container --> Only display container ID )
+- \$ docker container stop \$(docker container ls -aq) [To Stop all containers running]
+- \$ docker container rm \$(docker container ls -a -aq) [To Remove all containers from disk]
+- \$ docker image rm ubuntu (Delete the ubuntu Image)
+- \$ docker run -d --name webapp nginx:1.14-alpine (Run a container with the nginx:1.14-alpine image and name it webapp)
+- \$ docker rm -f $(docker ps -a -q) && docker rmi -f $(docker images -q) [To remove all running containers ever and all images pulled ever]
+
+---
