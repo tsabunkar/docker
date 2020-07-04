@@ -1,0 +1,26 @@
+# Docker Run
+
+- Run Tag
+  - \$ docker run redis:4.0 (4.0 is the tag--> version of this contanierized application)
+- Run - STDIN
+  - (Run docker command its all - Std output)
+  - (bydefault docker don't have standard input, as there is no terminal, so runs in non-interactive mode)
+  - \$ docker run -i <image> ( -i ==> parameter is for interactive mode, but prompt is missing)
+  - \$ docker run -it <image> ( -i ==> interactive mode, -t ==> Terminal to provide input)
+- Run: PORT Mapping
+  - docker application ruuning a web server uses port and ip address
+  - Docker image ip address can accessed by --> 2 options
+    - Internal IP of docker Container (users outside this docker container cannot access this ip addr)
+    - Ip of Docker Host (but Need to map a unique PORT with docker container PORT, ex- [.assets/port-mapping.png], [.assets/port-mapping-2.png])
+    - NOTE : Cannot Map same PORT in docker Host more than onces
+- Run: Volume Mapping (Persisting data in docker container)
+  - If we have run mysql applcation(container) and have dump data in it (tables, schema, views, etc) but as soon as we stop this container and remove the container (stop, rm cmd) --> All data will be lost
+  - If we want to persist this application(container) specific data then --> Map with outside directory in docker Host
+  - \$ docker run -v <docker_host_dir>:<app_container_dir> mysql
+  - \$ docker run -v /opt/datadir:/var/lib/mysql mysql
+  - [.assets/volume-mapping.png]
+- Inspect Container
+  - (provides additional details of container - name, IpAddr, ID in JSON format)
+- Container Logs
+  - (Suppose we run a container in deattached mode, To obtain this container log use ==> logs command)
+  - \$ docker container logs <container_id/container_name>
