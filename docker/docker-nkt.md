@@ -60,3 +60,42 @@
 - Docker uses storage driver inorder to mantaine Layered Architecture
 - Common Storage drivers are : AUFS, ZFS, BTRFS, Device Mapper, Overlay, Overlay2
 - Selection of storage divers depends upon host machine OS type i.e- for Ubuntu -> AUFS, Fedora -> Device Mapper
+
+---
+
+# Docker Network
+
+- Docker creates 3 networks: [.assets/docker-network.png]
+  - Bridge
+  - none
+  - host
+- Bridge Network:
+  - default nkt container get attached to
+  - \$ docker run ubuntu
+  - Bridge network is private internal network created by docker on the Host
+  - each container gets it own IpAddress
+  - Bridge network series --> 172.17.xxx.xxx
+  - Containers can communicate each other with bridge network
+- Host Network:
+  - \$ docker run ubuntu --network=host
+  - container PORT <--same_as--> Docker Host PORT (No need of port mapping)
+  - which also means we cannot run multiple containers with same PORT number
+- None Network
+  - Containers are not attached to any network
+  - Containers does not have access/communicate with other container or external Docker Host
+- User-defined network:
+  - If we want to create own network other than default network (172.17.xxx.xxx) within docker host --> then we can use user-defined network
+  - we can create own user-defined bridge network (along side with default bridge network)
+    - \$ docker network create \
+       --driver bridge \
+       --subnet 182.18.0.0/16
+      custom-isolated-network
+    - [.assets/user-defined-network.png]
+- Inspect Network
+  - \$ docker container inspect <container_id> ("Networks": { bridge" } )
+- Embedded DNS
+  - Container can communicate with each other using container name bcoz internal ip address keep chaging.
+  - Docker has builtin DNS Server which will help to resolve container name to provide internal ipAddress
+  - NOTE: Builtin DNS Server always run on -> 127.0.0.11
+  - [.assets/embedded-dns.png]
+  - Docker uses network namespaces
