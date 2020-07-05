@@ -154,3 +154,23 @@
   - \$ docker build . -t tsabunkar/result-app
   - \$ docker run -p 5001:80 --link db:db tsabunkar/result-app (Docker Host Ip addr - 5000 and Internal ip addr of container - 80 or 8080 ) (link result app with postgres db)
 - (Result Page -> http://172.17.0.1:5001/)
+
+---
+
+# Docker Compose- Automate Steps using docker-compose.yml file (Voting APP)
+
+- Install docker compose in your machine, before starting -> https://docs.docker.com/compose/install/
+- Stop all containers and remove those containers
+- (inside this docker-compose.yml file define sevices)
+- \$ cd /home/tejas/tejas/workspace/vsc/docker-voting-app
+- \$ docker-compose -f docker-compose-2.yml config (Validate docker-compose file sytnax)
+- \$ docker-compose -f docker-compose-2.yml up
+- \$ docker-compose -f docker-compose-2.yml down
+
+---
+
+# Push this image created
+
+- docker push tsabunkar/voting-app
+- docker push tsabunkar/worker-app
+- docker push tsabunkar/result-app
