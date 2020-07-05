@@ -153,3 +153,27 @@
   - \$ docker run -d kodekloud/simpe-webapp [Deattached Mode]
     - (Will run this container in deattached mode, it will run the docker container in background mode)
   - \$ docker container attach <container_id> (Dynamically attach to the running container instance in Attach Mode)
+
+---
+
+# Docker Registry
+
+- Cloud Repositry where docker images are stored
+- Central Repositry of all docker images
+- \$ docker run nginx (Runs the instances of nginx image)
+  - Actually above image name is --> image: docker.io/nginx/nginx
+  - First part of image name --> Central Registry Name (by default dockerHub) [other - gcr.io]
+  - Second part of image name --> User/Account name (docker hub User Account name / Organization name)
+  - Third part of image name --> Image/Repository name
+  - If we don't give Second part of image name then docker assumes that ==> Second part of image name <--same_as--> Third part of image name
+  - [.assets/docker-image-mean.png]
+- If we have Organization specific Registry then (Not DockerHub Registry)
+  - \$ docker login private-registry.io
+  - \$ docker run private-registry.io/tsabunkar/my-web-app
+  - \$ docker push private-registry.io/tsabunkar/my-web-app
+  - \$ docker pull private-registry.io/tsabunkar/my-web-app
+- Deploy Private Registry (within localhost of Orgnization without Cloud Solution-> inhouse Private Registry)
+  - \$ docker run -d -p 5000:5000 --name registry registry:2
+  - \$ docker image tag my-image localhost:5000/my-image
+  - \$ docker push localhost:5000/my-image
+  - \$ docker pull localhost:5000/my-image (or) docker pull 192.168.56.100:5000/my-image
