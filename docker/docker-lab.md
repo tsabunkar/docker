@@ -93,7 +93,7 @@
 
 # Create Docker Custom Image
 
-- https://github.com/mmumshad/simple-webapp-flask.git
+- https://github.com/tsabunkar/docker-webapp-flask.git
 
 - MANUAL STEPS:
 
@@ -124,3 +124,33 @@
 
 - \$ docker login
 - \$ docker push tsabunkar/py-webapp (please NOTE: image name should be -> tsabunkar/<img> preffix with username)
+
+---
+
+# Docker Compose- Manual Steps (Voting APP)
+
+- git clone https://github.com/tsabunkar/docker-voting-app.git
+
+- (Build images of voting-app, worker, result-app and push to your dockerhub repo )
+  - (voting-app) (Python based Web app)
+    - \$ cd /home/tejas/tejas/workspace/vsc/docker-voting-app/vote (find Dockerfile)
+    - \$ docker build . -t tsabunkar/voting-app (build custom image of Python based Web App)
+    - \$ docker run -p 5000:8080 tsabunkar/voting-app (running instance of this image)
+    - (visit : http://172.17.0.2:8080/ [internal container IpAddr] or http://172.17.0.1:5000/ [docker Host ipAddr])
+    - (cast vote -> ERROR : 500 Internal server error)
+  - \$ docker run --name=redis -p 6379:6379 redis:6 (Running Redis DB from 3rd party)
+  - \$ docker run -p 5000:8080 --link redis:redis tsabunkar/voting-app (linking Redis in-memory db with python web app) (remove redis_password as there is no password require for redis cache)
+- \$ docker run --name=db -e POSTGRES_HOST_AUTH_METHOD='trust' \
+  -e POSTGRES_USER='postgres' \
+  -e POSTGRES_PASSWORD='postgres' \
+  postgres:9.4
+  (Running postgres DB from 3rd party) (envrionment variable -> POSTGRES_HOST_AUTH_METHOD=trust To trust & allow all connection)
+- (building worker app -> .net framework app)
+  - \$ cd /home/tejas/tejas/workspace/vsc/docker-voting-app/worker
+  - \$ docker build . -t tsabunkar/worker-app
+  - \$ docker run --link redis:redis --link db:db tsabunkar/worker-app (linking worker app to redis and postgres db)
+- (building result app -> nodejs app)
+  - \$ cd /home/tejas/tejas/workspace/vsc/docker-voting-app/result
+  - \$ docker build . -t tsabunkar/result-app
+  - \$ docker run -p 5001:80 --link db:db tsabunkar/result-app (Docker Host Ip addr - 5000 and Internal ip addr of container - 80 or 8080 ) (link result app with postgres db)
+- (Result Page -> http://172.17.0.1:5001/)
