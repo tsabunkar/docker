@@ -48,7 +48,7 @@ ENTRYPOINT FLASK_APP=/opt/source-code/app.py flask run
   - FROM instruction are first line of Dockerfile
 - RUN instruction- install all dependencies
 - COPY instruction- copy local files from machine into docker image
-- ENTRYPOINT instruction- specify Entrypoint to be run when this image is run as container (entry file name)
+- ENTRYPOINT instruction- specify Entrypoint to be run when this image is run as container
 
 ---
 
@@ -73,3 +73,30 @@ ENTRYPOINT FLASK_APP=/opt/source-code/app.py flask run
 - "CAN Containerize Everthing"
 
 ---
+
+# Environment Variables
+
+- [./assets/env-variable.png]
+- To pass environment variable as argument in docker run command -> \$ docker run -e APP_COLOR=blue tsabunkar/py-webapp
+- How to know the environment variable -> \$ docker container inspect <container_id> (under "Config": { "Env" } )
+
+---
+
+# docker CMD v/s Entrypoint
+
+- Container are only meant to run process, task, db instances, web server, computational logic, It will be alive only uptill the process/web-server inside the container is running or else container will be exited
+- How define, what process to run inside the container ? --> CMD instruction
+- CMD instruction : Define the program to be run within the container when it start
+- For ex-
+  - nginx Dockerfile -> CMD ["nginx"]
+  - mysql Dockerfile -> CMD ["mysqld"]
+  - custom Dockerfile -> CMD ["bash"] (but bash is not process like - webserver/appserver/dbserver but a shell which listens from input of a terminal)
+- We can override Dockerfile image CMD by specifying in docker run command i.e-
+  - \$ docker run ubuntu:20.10 [COMMAND]
+  - \$ docker run ubuntu:20.10 sleep 1000
+- How to make above command permanet ?
+  - Specifiy in the CMD instruction in Docker file
+  - Syntax: \$ CMD command param1 ==> CMD ["command", "param1"]
+  - Example: \$ CMD sleep 5 ==> CMD ["sleep", "5"]
+- If we want to not specify params in docker run command the need to specifiy in ENTRYPOINT instruction --> [./assets/entrypoint.png]
+- What if don't specifiy ENTRYPOINT value in the docker run command ? then need to specifiy default value with CMD instruction. Therefore need to specifiy both instructions : ENTRYPOINT and CMD --> [./assets/both-instruction.png]
