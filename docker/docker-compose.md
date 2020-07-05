@@ -1,0 +1,38 @@
+# Docker Compose
+
+- Configuration services/applications in yaml format ==> docker-compose.yml (NOTE: docker-compose file is not same as Dockerfile, rather think docker-compose file is to run all containers together inside docker host and dockerfile is to build an particular custom image)
+- \$ docker-compose up (to bring up entier application stack)
+- Example - Voting application
+- [.assets/voting-app.png]
+- MANUAL Steps:
+  - \$ docker run -d --name=redis redis:6
+  - \$ docker run -d --name=db postgres
+  - \$ docker run -d --name=vote -p 5000:80 voting-app
+  - \$ docker run -d --name=result -p 5001:80 result-app
+  - \$ docker run -d --name=wroker worker
+  - [.assets/docker-run-steps.png]
+- docker run --links ==> Helps to link the two container (services/applications)
+  - example : redis container (service) can be linked to nodejs container (service)
+  - [.assets/docker-links.png]
+  - This techinque is Deprecated ==> Should use docker swarm or Networking concepts
+- Creating docker compose file using --> above manual steps so that we can automate and just run docker-compose.yml file [.assets/create-docker-compose.png]
+- Docker compose - build:
+  - If we build image from dockerhub registry docker will just pull from repo
+  - But If we use a custom image and need to build a docker image for that while running docker-compose file --specify--> path of Dockerfile for that custom image
+  - [.assets/custom-Dockerfile-in-docker-compose.png]
+- Docker compose - versions
+  - Different Versions of docker compose files are - version: 1, version: 2, version: 3
+  - [.assets/docker-compose-version.png]
+  - version: 1
+    - Docker compose attaches all the containers to default bridge network
+    - Need to specifiy links in order to communicate between different containers inside docker host
+  - version: 2
+    - Docker Compose Creates dedicated bridge network for application and attaches all the containers to this dedicated bridge network
+    - Soo links are deprecated here (All containers can communicate using service name)
+    - Start-up order: Which container should start up before other container (container start-up order)
+  - version: 3
+    - support for docker-swarm
+- docker compose- network:
+  - bridge network is used b/w container
+  - conside ex voting-app -> we have two network - frontend (exposed outside to client) and backend (internal network)
+  - [.assets/docker-compose-network.png]

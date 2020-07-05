@@ -91,7 +91,7 @@
 
 ---
 
-# Create Docker Image
+# Create Docker Custom Image
 
 - https://github.com/mmumshad/simple-webapp-flask.git
 
@@ -115,7 +115,7 @@
   - \$ docker build . (run build command where you have Dockerfile)
   - \$ docker build . -t tsabunkar/py-webapp
   - \$ docker images ls (New image would have been created as - 'tsabunkar/py-webapp')
-  - \$ docker run tsabunkar/py-webapp (Run custom image)
+  - \$ docker run tsabunkar/py-webapp (Run custom image as container/instance)
   - (Visit -> http://172.17.0.3:7575/ )
 
 ---

@@ -40,7 +40,8 @@ ENTRYPOINT FLASK_APP=/opt/source-code/app.py flask run
 
 # Dockerfile
 
-- Dockerfile is a tex file, written specific INSTRUCTIONS and ARGUMENT format which docker can understand
+- Dockerfile is used to build/create custom image
+- Dockerfile is a text file, written specific INSTRUCTIONS and ARGUMENT format which docker can understand
 - INSTRUCTIONS in Dockerfile are- FROM, RUN, COPY, ENTRYPOINT (left side of file)
   - This is will instruct docker to perform specific action while creating the image
 - ARGUMENT are in right side of Dockerfile- (linux commands)
