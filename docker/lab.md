@@ -163,7 +163,7 @@
 - Stop all containers and remove those containers
 - (inside this docker-compose.yml file define sevices)
 - \$ cd /home/tejas/tejas/workspace/vsc/docker-voting-app
-- \$ docker-compose -f docker-compose-2.yml config (Validate docker-compose file sytnax)
+- \$ docker-compose -f docker-compose-2.yml config (Validate docker-compose file sytnax) (-f flag is used to provide path of custom docker file name other than default which is - docker-compose.yml)
 - \$ docker-compose -f docker-compose-2.yml up
 - \$ docker-compose -f docker-compose-2.yml down
 
@@ -174,3 +174,15 @@
 - docker push tsabunkar/voting-app
 - docker push tsabunkar/worker-app
 - docker push tsabunkar/result-app
+
+---
+
+# NAMESPACE- PID
+
+- \$ docker run -it --rm -p 8888:8080 tomcat:9.0 (-it interactive terminal mode, --rm flag remove container when stopped )
+  - (visit http:127.0.0.1:8888 )
+- \$ docker run -d --rm -p 8888:8080 tomcat:9.0 (Running in background)
+- \$ docker container exec <container_id> ls -eaf (Execu command inside docker container) (ps -eaf (or) ls -eaf ==> List all the process running inside that container)
+- \$ ps -eaf | grep 'docker-java-home' (Inside host machine lets check if same process is running as it is running inside container) ==> (Yes same process runs in host machine and inside a container but with different processID)
+
+---
