@@ -78,6 +78,12 @@
     (ERROR : not able to install any pipeline plugins bcoz -> jenkins:2.60.3 is deprecated rather use -> docker pull jenkins/jenkins)
   - \$ docker pull jenkins/jenkins:2.242
   - \$ sudo docker run --name myjenkins -p 9090:8080 -v /home/tejas/tejas/docker-data/jenkins-data:/var/jenkins_home jenkins/jenkins:2.241
+  - Steps:
+    - Installed Plugins
+    - Create user
+    - \$ docker container stop 492f49e2674d
+    - \$ docker container start 492f49e2674d
+    - login page (next time you login no need to re-install this plugin again)
 
 ---
 
