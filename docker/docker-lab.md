@@ -90,3 +90,37 @@
 - REF: https://www.jenkins.io/blog/2018/12/10/the-official-Docker-image/
 
 ---
+
+# Create Docker Image
+
+- https://github.com/mmumshad/simple-webapp-flask.git
+
+- MANUAL STEPS:
+
+  - \$ cd /home/tejas/tejas/workspace/vsc/docker/docker/py-web-app
+  - \$ docker run -it ubuntu:20.10 bash
+  - \$ # apt-get update
+  - \$ # apt-get install -y python3.6
+  - \$ # apt install -y python3-pip
+  - \$ # pip install flask
+  - \$ # apt-get -y install nano
+  - \$ # nano /opt/app.py (copy source code from [./py-web-app/app.py])
+  - \$ # cd /opt
+  - \$ FLASK_APP=app.py flask run --host=0.0.0.0
+  - (Visit -> http://172.17.0.2:5000/ ) {To know ip addr do docker inspect of containerID}
+
+- AUTOMATE ABOVE STEPS USING Dockerfile:
+
+  - \$ cd /home/tejas/tejas/workspace/vsc/docker/docker/py-web-app
+  - \$ docker build . (run build command where you have Dockerfile)
+  - \$ docker build . -t tsabunkar/py-webapp
+  - \$ docker images ls (New image would have been created as - 'tsabunkar/py-webapp')
+  - \$ docker run tsabunkar/py-webapp (Run custom image)
+  - (Visit -> http://172.17.0.3:7575/ )
+
+---
+
+# To Push cutom image to DockerHub Registry
+
+- \$ docker login
+- \$ docker push tsabunkar/py-webapp (please NOTE: image name should be -> tsabunkar/<img> preffix with username)
