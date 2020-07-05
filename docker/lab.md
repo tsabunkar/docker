@@ -182,7 +182,22 @@
 - \$ docker run -it --rm -p 8888:8080 tomcat:9.0 (-it interactive terminal mode, --rm flag remove container when stopped )
   - (visit http:127.0.0.1:8888 )
 - \$ docker run -d --rm -p 8888:8080 tomcat:9.0 (Running in background)
-- \$ docker container exec <container_id> ls -eaf (Execu command inside docker container) (ps -eaf (or) ls -eaf ==> List all the process running inside that container)
+- \$ docker container ls
+- \$ docker container exec <container_id> ps -eaf (Execu command inside docker container) (ps -eaf ==> List all the process running inside that container)
 - \$ ps -eaf | grep 'docker-java-home' (Inside host machine lets check if same process is running as it is running inside container) ==> (Yes same process runs in host machine and inside a container but with different processID)
 
 ---
+
+# Docker Storage
+
+- \$ sudo ls -l /var/lib/docker/
+- \$ docker info | more (Detailed information of docker) (Storage Driver: overlay2)
+- \$ sudo ls -l /var/lib/docker/overlay2
+- \$ docker pull hello-world
+- \$ docker history <image_id>
+- \$ docker image ls
+- \$ docker history bf756fb1ae65
+- \$ docker image history hello-world
+- \$ docker image history tsabunkar/result-app (history of custom image )
+- \$ docker system df (Actual disk usage of docker - images, containers, local volumes, build cache)
+- \$ docker system df -v (Detial disk usage of docker)
