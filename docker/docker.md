@@ -177,3 +177,52 @@
   - \$ docker image tag my-image localhost:5000/my-image
   - \$ docker push localhost:5000/my-image
   - \$ docker pull localhost:5000/my-image (or) docker pull 192.168.56.100:5000/my-image
+
+---
+
+# Container Orchestration
+
+- With docker we can run the single instance of the application using docker run command (one instance os app on one docker Host) but what if number of client/traffic increases and this instance is not able to handle the load ? ==> We need to manually add/remove multiple instances as load increase/decrase based on traffic/usage, Closely monitor docker Host, need to check health of docker Host, container -> Thus this approach is not feasible. ==> Sol is Container Orchestration
+- Container Orchestration-
+  - it contains set of tools and scripts that can help host, containers in PROD environment.
+  - It containes multiple docker Host which can host containers (or instance of an image) so that if one fails, we can use other docker host
+  - It spun-up/deploy multiple containers in an docker host just by single command in docker swarm: \$ docker service create --replicas=100 nodejs
+  - Orchestration Solution also provide scale up or down as traffic increase or decrease
+  - Container Orchestration also provides advance networking b/w containers of other docker host
+  - Other feature- loading balancing, sharing storage b/w docker host, configuration Management, Security, etc
+- Different Container Orchestration providers are :
+  - Docker Swarm (from docker)
+  - Kubernetes (from google) <--- Most Popular (avaliable in all cloud providers GCP, AWS, Azure)
+  - MESOS (from Apache)
+- Docker Swarm
+  - Single Docker Swarm can have muliple Docker Hosts (where each docker host can have muliple containers of an image) [.assets/docker-swarm.png]
+  - One Docker Host is allocated as -> Swarm Manager, Other all docker hosts are -> Workers
+  - \$ docker swarm init (Run in Swarm Manager)
+  - \$ docker swarm join --token <token> (Run in workers)(Join Workers with Swarm Manager)
+  - Once worker are joined with Swarm manager -> this workers are now called Node and now ready to create service and deploy in Swarm Cluster [.assets/docker-connect-nodes.png]
+  - Docker Swarm Orchestration - provides load balancing, scale-up/down, etc.
+  - key component in Docker Swarm Orchestration is -> Docker Service
+  - Docker Service: Is one or more instance of an application that are running across all the nodes/workers in Docker Swarm Cluster -> \$ docker service create --replicas=3 my-web-server (run in Swarm Manager) (here we specifiy no of replicas that we want to run across worker node) [.assets/docker-service.png]
+- Kubernetes:
+  - Kubernetes CLI - kube control tool (kubectl)
+  - Using kubectl we can run thousand instance of same application with single command.
+    - \$ kubectl run --replicas=1000 my-web-server
+  - We can confifure Kubernetes such that it can automatically handle traffic load and scale-up or down the instance depending on traffic, do load balancing, etc
+    - \$ kubectl scale --replicas=2000 my-web-server
+  - with rolling-update command it can also upgrade these thousands of instances.
+    - \$ kubectl rolling-update my-web-server --image=web-server:2
+    - \$ kubectl rolling-update my-web-server --rollback (Rollback updates)
+  - Kubernetes provides different advance network providers, storage, security, Authentication & Authorization [.assets/k8.png]
+- Relationship b/w docker and Kubernetes:
+  - k8 uses Docker Host inorder to host docker containers.
+  - K8 also provides alternative of docker -> Rocket
+- k8 Architecture
+  - consist of master and worker nodes (each node think as docker Host)
+  - master manages all other worker node and responsible for actual orchestration of worker nodes [.assets/master-slave-nodes.png]
+  - K8 comes with following components:
+    - API Server (Act as frontend for Kubernetes Cluster )
+    - etcd (distributed key value storage)
+    - kubelet (Agent)
+    - Container Runtime
+    - Controller (think- brain of k8)
+    - Scheduler (distributing the work/containers across the nodes)
