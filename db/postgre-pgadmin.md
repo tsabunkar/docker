@@ -55,7 +55,7 @@ https://hub.docker.com/_/postgres
 ## Install PgAdmin
 
 - docker pull dpage/pgadmin4:4.21
-- docker run -p 90:9002 \
+- docker run --name pgadmin -p 90:9002 \
    -e 'PGADMIN_DEFAULT_EMAIL=tsabunkar@gmail.com' \
    -e 'PGADMIN_DEFAULT_PASSWORD=root' \
    -d dpage/pgadmin4:4.21
