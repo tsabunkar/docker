@@ -103,5 +103,6 @@ Example:
 - https://medium.com/swlh/sonarqube-sonarscanner-setup-1a633b654828
 - https://medium.com/@HoussemDellai/setup-sonarqube-in-a-docker-container-3c3908b624df
 - https://github.com/newtmitch/docker-sonar-scanner
+- https://github.com/bellingard/sonar-scanner-npm
 
 ---
