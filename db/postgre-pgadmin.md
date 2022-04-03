@@ -38,9 +38,9 @@ https://askubuntu.com/questions/32730/how-to-remove-postgres-from-my-installatio
   - sudo docker pull hello-world
   - sudo docker run hello-world
   - sudo docker images hello-world
-- docker pull postgres:12
+- docker pull postgres:12.10
 - docker image ls
-- docker run --name postgres-server -e POSTGRES_PASSWORD=root -d postgres:12
+- docker run --name postgres-server -e POSTGRES_PASSWORD=root -d postgres:12.10
 - docker container ls
 - docker container stop postgres-server
 - docker container rm postgres-server
@@ -54,14 +54,17 @@ https://hub.docker.com/_/postgres
 
 ## Install PgAdmin
 
-- docker pull dpage/pgadmin4:4.21
-- docker run --name pgadmin -p 90:9002 \
+- docker pull dpage/pgadmin4:6.7
+- docker run -d --name pgAdmin \
+   -v pgadmin_data:/var/lib/pgadmin \
    -e 'PGADMIN_DEFAULT_EMAIL=tsabunkar@gmail.com' \
    -e 'PGADMIN_DEFAULT_PASSWORD=root' \
-   -d dpage/pgadmin4:4.21
+   --add-host=host.docker.internal:host-gateway \
+   -p 9002:80 \
+   dpage/pgadmin4:6.7
 - (To know what is the ip address and port number, Inspect the container)
   sudo docker inspect <container_id>
-- "IPAddress": "172.17.0.3",
+- Browser > http://127.0.0.1:9002/ (or) http://localhost:9002/
 - User name: tsabunkar@gmail.com
   password: root
 - server > create > Server
@@ -73,7 +76,9 @@ https://hub.docker.com/_/postgres
   password : (you know)
 
 REF:
-https://www.pgadmin.org/docs/pgadmin4/latest/container_deployment.html
+
+- https://www.pgadmin.org/docs/pgadmin4/latest/container_deployment.html
+- https://medium.com/signofactory/setting-up-your-mac-as-a-full-stack-web-developer-intel-apple-silicon-in-2021-the-backend-9fcc54e858e3
 
 - NOTE: To start the stop containers : sudo docker container start a842936f7ad0 7ca6eee00427
 

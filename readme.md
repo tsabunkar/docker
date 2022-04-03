@@ -439,3 +439,11 @@ https://stackoverflow.com/questions/17236796/how-to-remove-old-docker-containers
 - https://katacoda.com/kodekloud/scenarios/docker-for-beginners-fcc-network
 
 ---
+
+# Docker MacOs
+
+- In case If docker is installed
+- You have closed the docker daemon/service (Docker GUI)
+- If you try to run docker command from CLI, You would get error
+  - Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+  - Sol: Just Run the docker daemon > Spotlight (cmd + space) > docker.app
